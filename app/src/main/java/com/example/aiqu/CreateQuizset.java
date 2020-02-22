@@ -92,7 +92,7 @@ public class CreateQuizset extends AppCompatActivity {
                     "\t\t\t\t\"#\": 2,\n" +
                     "\t\t\t\t\"question\": \"What is your 2 times 2?\",\n" +
                     "\t\t\t\t\"question_type\": \"shortanswer\",\n" +
-                    "\t\t\t\t\"selections\": null,\n" +
+                    "\t\t\t\t\"selections\": [null],\n" +
                     "\t\t\t\t\"answer\": \"4\"\n" +
                     "\t\t\t}\n" +
                     "\t\t],\n" +
@@ -136,7 +136,7 @@ public class CreateQuizset extends AppCompatActivity {
                     "\t\t\t\t\"#\": 3,\n" +
                     "\t\t\t\t\"question\": \"What is my name?\",\n" +
                     "\t\t\t\t\"question_type\": \"shortanswer\",\n" +
-                    "\t\t\t\t\"selections\": null,\n" +
+                    "\t\t\t\t\"selections\": [null],\n" +
                     "\t\t\t\t\"answer\": \"aa\"\n" +
                     "\t\t\t}\n" +
                     "\t\t],\n" +

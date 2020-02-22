@@ -37,6 +37,8 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -131,60 +133,68 @@ public class HomeFragment extends Fragment {
             String data = "";
             if (sp != null && sp.contains("data")) {
                 data = sp.getString("data", "");
-//                Toast.makeText(getActivity(), sp.getString("data", "None"), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), sp.getString("data", "None"), Toast.LENGTH_SHORT).show();
             }
 
             try {
                 JSONObject jo_userInfo = new JSONObject(data);
                 User user = new User();
                 ArrayList<Quiz> quizlist = new ArrayList<>();
-                for (int i = 0; i < jo_userInfo.length(); i++) {
-                    JSONObject jo_user = jo_userInfo.getJSONObject("user");
-                    user.setId(jo_user.getString("id"));
-                    user.setPw(jo_user.getString("pw"));
-                    user.setName(jo_user.getString("name"));
-                    user.setEmail(jo_user.getString("email"));
-                    Log.d("---", user.toString());
+                // user
+                JSONObject jo_user = jo_userInfo.getJSONObject("user");
+                user.setId(jo_user.getString("id"));
+                user.setPw(jo_user.getString("pw"));
+                user.setName(jo_user.getString("name"));
+                user.setEmail(jo_user.getString("email"));
+                Log.d("---", user.toString());
 
-//                    JSONObject jo_quizlist = jo_userInfo.getJSONObject("quizlist");
-                    JSONArray ja_quizlist = jo_userInfo.getJSONArray("quizlist");
-                    for (int j = 0; j < ja_quizlist.length(); j++) {
-                        JSONObject jo_quiz = ja_quizlist.getJSONObject(i);
+                // quizlist
+                JSONArray ja_quizlist = jo_userInfo.getJSONArray("quizlist");
+                Log.d("===", "ja_quizlist.length(): " + ja_quizlist.length());
+                for (int j = 0; j < ja_quizlist.length(); j++) {
+                    JSONObject jo_quiz = ja_quizlist.getJSONObject(j);
 
-                        //
-                        String quiz_name = jo_quiz.getString("quiz_name");
+                    //
+                    String quiz_name = jo_quiz.getString("quiz_name");
 
-                        //
-                        JSONArray ja_quiz_set = jo_quiz.getJSONArray("quiz_set");
-                        ArrayList<Question> question_list = new ArrayList<>();
-                        for (int k = 0; k < ja_quiz_set.length(); k++) {
+                    //
+                    JSONArray ja_quiz_set = jo_quiz.getJSONArray("quiz_set");
+                    ArrayList<Question> question_list = new ArrayList<>();
+                    for (int k = 0; k < ja_quiz_set.length(); k++) {
+                        JSONObject jo_question = ja_quiz_set.getJSONObject(k);
 
-                            JSONObject jo_question = ja_quiz_set.getJSONObject(k);
-                            for (int l = 0; l < jo_question.length(); l++) {
-                                String n = jo_question.getString("#");
-                                String q = jo_question.getString("question");
-                                String qt = jo_question.getString("question_type");
-                                JSONArray ja_selections = jo_question.getJSONArray("selections");
-                                String[] selections = new String[ja_selections.length()];
-                                for (int p = 0; p < ja_selections.length(); p++) {
-                                    selections[p] = ja_selections.get(p) + "";
-                                }
-                                String answer = jo_question.getString("answer");
-                                Question question = new Question(n, q, qt, selections, answer);
-                            }
+                        String n = jo_question.getString("#");
+                        String q = jo_question.getString("question");
+                        String qt = jo_question.getString("question_type");
 
+//                        JSONObject jo_selections = (JSONObject) jo_question.get("selections");
+//                        String strrr = jo_question.getString("selections");
+//                        JSONArray jasdf = new JSONArray(strrr);
+
+//                        Log.d("===", "string : " + strrr);
+//                        String str = jo_question.getJSONObject("selections").toString();
+//                        Log.d("===", "str : " + str);
+                        JSONArray ja_selections = jo_question.getJSONArray("selections");
+//                        JSONArray ja_selections =  (JSONArray) jo_question.getJSONArray("selections");
+
+                        String[] selections = new String[ja_selections.length()];
+                        for (int p = 0; p < ja_selections.length(); p++) {
+                            selections[p] = ja_selections.get(p) + "";
                         }
-
-                        //
-                        JSONObject quiz_summary = jo_quiz.getJSONObject("quiz_summary");
-
-
-                        Quiz quiz = new Quiz(quiz_name, question_list, null);
-
-                        Log.d("===", quiz.toString());
+                        String answer = jo_question.getString("answer");
+                        Question question = new Question(n, q, qt, selections, answer);
+                        question_list.add(question);
                     }
 
+                    //
+                    JSONObject quiz_summary = jo_quiz.getJSONObject("quiz_summary");
+
+
+                    Quiz quiz = new Quiz(quiz_name, question_list, null);
+
+                    Log.d("===", quiz.toString());
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
