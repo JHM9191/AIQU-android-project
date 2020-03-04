@@ -1,8 +1,12 @@
 package com.example.aiqu;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Quiz {
+public class Quiz implements Serializable {
+
+
+
     String name;
     ArrayList<Question> questionList;
     Summary summary;

@@ -25,9 +25,9 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/tv_item_quizset_subject"
+            android:id="@+id/tv_item_questions_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="과목" />
+            android:hint="문제 개수" />
     </LinearLayout>
 </LinearLayout>

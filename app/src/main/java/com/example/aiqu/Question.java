@@ -1,8 +1,9 @@
 package com.example.aiqu;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Question {
+public class Question implements Serializable {
     String number;
     String question;
     String type;
