@@ -1,6 +1,5 @@
 package com.example.aiqu.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,9 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -141,6 +138,138 @@ public class HomeFragment extends Fragment {
                 "\t\t\t\t\"question_type\": \"shortanswer\",\n" +
                 "\t\t\t\t\"selections\": [null],\n" +
                 "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 4,\n" +
+                "\t\t\t\t\"question\": \"What is atom?\",\n" +
+                "\t\t\t\t\"question_type\": \"multiplechoice\",\n" +
+                "\t\t\t\t\"selections\": [\n" +
+                "\t\t\t\t\t\"aa\",\n" +
+                "\t\t\t\t\t\"bb\",\n" +
+                "\t\t\t\t\t\"cc\",\n" +
+                "\t\t\t\t\t\"dd\",\n" +
+                "\t\t\t\t\t\"ee\"\n" +
+                "\t\t\t\t],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 5,\n" +
+                "\t\t\t\t\"question\": \"What is your name?\",\n" +
+                "\t\t\t\t\"question_type\": \"multiplechoice\",\n" +
+                "\t\t\t\t\"selections\": [\n" +
+                "\t\t\t\t\t\"aa\",\n" +
+                "\t\t\t\t\t\"bb\",\n" +
+                "\t\t\t\t\t\"cc\",\n" +
+                "\t\t\t\t\t\"dd\",\n" +
+                "\t\t\t\t\t\"ee\"\n" +
+                "\t\t\t\t],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 6,\n" +
+                "\t\t\t\t\"question\": \"What is my name?\",\n" +
+                "\t\t\t\t\"question_type\": \"shortanswer\",\n" +
+                "\t\t\t\t\"selections\": [null],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 7,\n" +
+                "\t\t\t\t\"question\": \"What is atom?\",\n" +
+                "\t\t\t\t\"question_type\": \"multiplechoice\",\n" +
+                "\t\t\t\t\"selections\": [\n" +
+                "\t\t\t\t\t\"aa\",\n" +
+                "\t\t\t\t\t\"bb\",\n" +
+                "\t\t\t\t\t\"cc\",\n" +
+                "\t\t\t\t\t\"dd\",\n" +
+                "\t\t\t\t\t\"ee\"\n" +
+                "\t\t\t\t],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 8,\n" +
+                "\t\t\t\t\"question\": \"What is your name?\",\n" +
+                "\t\t\t\t\"question_type\": \"multiplechoice\",\n" +
+                "\t\t\t\t\"selections\": [\n" +
+                "\t\t\t\t\t\"aa\",\n" +
+                "\t\t\t\t\t\"bb\",\n" +
+                "\t\t\t\t\t\"cc\",\n" +
+                "\t\t\t\t\t\"dd\",\n" +
+                "\t\t\t\t\t\"ee\"\n" +
+                "\t\t\t\t],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 9,\n" +
+                "\t\t\t\t\"question\": \"What is my name?\",\n" +
+                "\t\t\t\t\"question_type\": \"shortanswer\",\n" +
+                "\t\t\t\t\"selections\": [null],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 10,\n" +
+                "\t\t\t\t\"question\": \"What is atom?\",\n" +
+                "\t\t\t\t\"question_type\": \"multiplechoice\",\n" +
+                "\t\t\t\t\"selections\": [\n" +
+                "\t\t\t\t\t\"aa\",\n" +
+                "\t\t\t\t\t\"bb\",\n" +
+                "\t\t\t\t\t\"cc\",\n" +
+                "\t\t\t\t\t\"dd\",\n" +
+                "\t\t\t\t\t\"ee\"\n" +
+                "\t\t\t\t],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 11,\n" +
+                "\t\t\t\t\"question\": \"What is your name?\",\n" +
+                "\t\t\t\t\"question_type\": \"multiplechoice\",\n" +
+                "\t\t\t\t\"selections\": [\n" +
+                "\t\t\t\t\t\"aa\",\n" +
+                "\t\t\t\t\t\"bb\",\n" +
+                "\t\t\t\t\t\"cc\",\n" +
+                "\t\t\t\t\t\"dd\",\n" +
+                "\t\t\t\t\t\"ee\"\n" +
+                "\t\t\t\t],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 12,\n" +
+                "\t\t\t\t\"question\": \"What is my name?\",\n" +
+                "\t\t\t\t\"question_type\": \"shortanswer\",\n" +
+                "\t\t\t\t\"selections\": [null],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 13,\n" +
+                "\t\t\t\t\"question\": \"What is atom?\",\n" +
+                "\t\t\t\t\"question_type\": \"multiplechoice\",\n" +
+                "\t\t\t\t\"selections\": [\n" +
+                "\t\t\t\t\t\"aa\",\n" +
+                "\t\t\t\t\t\"bb\",\n" +
+                "\t\t\t\t\t\"cc\",\n" +
+                "\t\t\t\t\t\"dd\",\n" +
+                "\t\t\t\t\t\"ee\"\n" +
+                "\t\t\t\t],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 14,\n" +
+                "\t\t\t\t\"question\": \"What is your name?\",\n" +
+                "\t\t\t\t\"question_type\": \"multiplechoice\",\n" +
+                "\t\t\t\t\"selections\": [\n" +
+                "\t\t\t\t\t\"aa\",\n" +
+                "\t\t\t\t\t\"bb\",\n" +
+                "\t\t\t\t\t\"cc\",\n" +
+                "\t\t\t\t\t\"dd\",\n" +
+                "\t\t\t\t\t\"ee\"\n" +
+                "\t\t\t\t],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\t\"#\": 15,\n" +
+                "\t\t\t\t\"question\": \"What is my name?\",\n" +
+                "\t\t\t\t\"question_type\": \"shortanswer\",\n" +
+                "\t\t\t\t\"selections\": [null],\n" +
+                "\t\t\t\t\"answer\": \"aa\"\n" +
                 "\t\t\t}\n" +
                 "\t\t],\n" +
                 "\t\t\"quiz_summary\": {\n" +
@@ -159,7 +288,8 @@ public class HomeFragment extends Fragment {
         String data = "";
         if (sp != null && sp.contains("data")) {
             data = sp.getString("data", "");
-            Toast.makeText(getActivity(), sp.getString("data", "None"), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), sp.getString("data", "None"), Toast.LENGTH_SHORT).show();
+            Log.d("===", sp.getString("data", "None"));
         }
 
         try {
