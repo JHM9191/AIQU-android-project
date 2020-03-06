@@ -3,11 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     android:orientation="vertical">
 
     <ListView
         android:id="@+id/lv_quizset"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="25px"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" />
 
 </LinearLayout>

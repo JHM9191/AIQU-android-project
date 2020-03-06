@@ -29,7 +29,7 @@
                 android:id="@+id/tv_question_selection1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3px"
+                android:layout_marginBottom="15px"
                 android:background="#EAEAEA"
                 android:padding="8px"
                 android:textColor="@android:color/black"
@@ -39,7 +39,7 @@
                 android:id="@+id/tv_question_selection2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3px"
+                android:layout_marginBottom="15px"
                 android:background="#EAEAEA"
                 android:padding="8px"
                 android:textColor="@android:color/black"
@@ -49,27 +49,7 @@
                 android:id="@+id/tv_question_selection3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3px"
-                android:background="#EAEAEA"
-                android:padding="8px"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_question_selection4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3px"
-                android:background="#EAEAEA"
-                android:padding="8px"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_question_selection5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3px"
+                android:layout_marginBottom="15px"
                 android:background="#EAEAEA"
                 android:padding="8px"
                 android:textColor="@android:color/black"
@@ -87,6 +67,27 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_question_selection4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15px"
+                android:background="#EAEAEA"
+                android:padding="8px"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_question_selection5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15px"
+                android:background="#EAEAEA"
+                android:padding="8px"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
         <TextView
@@ -99,6 +100,13 @@
             android:textAlignment="center"
             android:textColor="@android:color/holo_red_light"
             android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_question_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="제출하기"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

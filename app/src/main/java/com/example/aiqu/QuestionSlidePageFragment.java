@@ -4,10 +4,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +54,20 @@ public class QuestionSlidePageFragment extends Fragment {
 
 
         mSlidingTabLayout = view.findViewById(R.id.sliding_tabs);
+
+        // modify color of slidingtab
+        SlidingTabLayout.TabColorizer tabColorizer = new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return Color.RED;
+            }
+
+            @Override
+            public int getDividerColor(int position) {
+                return Color.parseColor("#EAEAEA");
+            }
+        };
+        mSlidingTabLayout.setCustomTabColorizer(tabColorizer);
         mSlidingTabLayout.setViewPager(mViewPager);
     }
 
@@ -82,7 +99,11 @@ public class QuestionSlidePageFragment extends Fragment {
             View view = getActivity().getLayoutInflater().inflate(R.layout.item_question, container, false);
             container.addView(view);
 
+            // Question
             TextView question = view.findViewById(R.id.tv_question_question);
+            question.setText(quiz.getQuestionList().get(position).getQuestion() + "");
+
+            // Selections
             final TextView[] selections = {
                     view.findViewById(R.id.tv_question_selection1),
                     view.findViewById(R.id.tv_question_selection2),
@@ -92,16 +113,11 @@ public class QuestionSlidePageFragment extends Fragment {
             };
 
             EditText input = null;
-
-            TextView answer = view.findViewById(R.id.tv_question_answer);
-
-            question.setText(quiz.getQuestionList().get(position).getQuestion() + "");
-
             for (int i = 0; i < quiz.getQuestionList().get(position).getSelections().length; i++) {
                 Log.d(TAG, "selections length : " + quiz.getQuestionList().get(position).getSelections().length + "");
                 final String sel = quiz.getQuestionList().get(position).getSelections()[i];
                 if (sel.equals("null")) {
-                    for (int j = 0; j < selections.length; j++){
+                    for (int j = 0; j < selections.length; j++) {
                         selections[j].setVisibility(View.GONE);
                         selections[j].setVisibility(View.INVISIBLE);
 
@@ -117,25 +133,38 @@ public class QuestionSlidePageFragment extends Fragment {
                     selections[i].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getContext(), sel, Toast.LENGTH_SHORT).show();
-                            resetColor(selections);
-//                            selections[finalI1].setTextColor(Color.BLUE);
+//                            Toast.makeText(getContext(), sel, Toast.LENGTH_SHORT).show();
+
+                            // change background color on selected choice
+                            resetBackgroundColor(selections);
                             selections[finalI1].setBackgroundColor(Color.CYAN);
+
+                            // save my choice for quiz result at the end.
+
                         }
+
+
+
                     });
                 }
             }
 
+            // Answer
+            TextView answer = view.findViewById(R.id.tv_question_answer);
             answer.setText("답: " + quiz.getQuestionList().get(position).getAnswer() + "");
 
 
-            // to be added.
+            // Submit button at the end of the question
+            Button submit = view.findViewById(R.id.btn_question_submit);
+            if (position == (getCount() - 1)) {
+                submit.setVisibility(View.VISIBLE);
+            }
 
             return view;
         }
 
 
-        public void resetColor(TextView[] selections) {
+        public void resetBackgroundColor(TextView[] selections) {
             for (int i = 0; i < selections.length; i++) {
 //                selections[i].setTextColor(Color.BLACK);
                 selections[i].setBackgroundColor(Color.parseColor("#EAEAEA"));
@@ -145,30 +174,6 @@ public class QuestionSlidePageFragment extends Fragment {
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             container.removeView((View) object);
-        }
-    }
-
-    class SelectionAdapter extends BaseAdapter {
-
-
-        @Override
-        public int getCount() {
-            return 0;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
         }
     }
 }

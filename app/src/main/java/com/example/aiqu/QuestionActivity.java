@@ -26,11 +26,9 @@ public class QuestionActivity extends AppCompatActivity {
             Log.d(TAG, "savedInstanceState == null");
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             QuestionSlidePageFragment fragment = new QuestionSlidePageFragment();
-            fragment.setData(quiz);
+            fragment.setData(quiz);  // hand-over quiz data
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
-
-
     }
 }

@@ -6,16 +6,16 @@ public class Summary {
     ArrayList<Integer> answered;
     ArrayList<Integer> unanswered;
     ArrayList<Integer> correct;
-    ArrayList<Integer> inccorect;
+    ArrayList<Integer> incorrect;
 
     public Summary() {
     }
 
-    public Summary(ArrayList<Integer> answered, ArrayList<Integer> unanswered, ArrayList<Integer> correct, ArrayList<Integer> inccorect) {
+    public Summary(ArrayList<Integer> answered, ArrayList<Integer> unanswered, ArrayList<Integer> correct, ArrayList<Integer> incorrect) {
         this.answered = answered;
         this.unanswered = unanswered;
         this.correct = correct;
-        this.inccorect = inccorect;
+        this.incorrect = incorrect;
     }
 
     public ArrayList<Integer> getAnswered() {
@@ -42,12 +42,12 @@ public class Summary {
         this.correct = correct;
     }
 
-    public ArrayList<Integer> getInccorect() {
-        return inccorect;
+    public ArrayList<Integer> getIncorrect() {
+        return incorrect;
     }
 
-    public void setInccorect(ArrayList<Integer> inccorect) {
-        this.inccorect = inccorect;
+    public void setIncorrect(ArrayList<Integer> incorrect) {
+        this.incorrect = incorrect;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Summary {
                 "answered=" + answered +
                 ", unanswered=" + unanswered +
                 ", correct=" + correct +
-                ", inccorect=" + inccorect +
+                ", incorrect=" + incorrect +
                 '}';
     }
 }
