@@ -3,6 +3,8 @@ package com.example.aiqu;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,6 +25,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.aiqu.common.view.SlidingTabLayout;
 
+import java.util.ArrayList;
+
 public class QuestionSlidePageFragment extends Fragment {
 
     //    static String TAG = "QuestionSlidePageFragment";
@@ -33,9 +37,17 @@ public class QuestionSlidePageFragment extends Fragment {
 
     private ViewPager mViewPager;
 
+    public QuizResult[] quizResults;
+
     public void setData(Quiz quiz) {
         this.quiz = quiz;
         Log.d(TAG, quiz.toString());
+        quizResults = new QuizResult[quiz.getQuestionList().size()];
+        for (int i = 0; i < quizResults.length; i++) {
+            QuizResult qr = new QuizResult(Integer.parseInt(quiz.getQuestionList().get(i).getNumber()), "unanswered", quiz.getQuestionList().get(i).getAnswer());
+            quizResults[i] = qr;
+        }
+        Log.d(TAG, "quizResults.length : " + quizResults.length);
     }
 
 
@@ -95,12 +107,12 @@ public class QuestionSlidePageFragment extends Fragment {
 
         @NonNull
         @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, final int position) {
             View view = getActivity().getLayoutInflater().inflate(R.layout.item_question, container, false);
             container.addView(view);
 
             // Question
-            TextView question = view.findViewById(R.id.tv_question_question);
+            final TextView question = view.findViewById(R.id.tv_question_question);
             question.setText(quiz.getQuestionList().get(position).getQuestion() + "");
 
             // Selections
@@ -111,7 +123,6 @@ public class QuestionSlidePageFragment extends Fragment {
                     view.findViewById(R.id.tv_question_selection4),
                     view.findViewById(R.id.tv_question_selection5)
             };
-
             EditText input = null;
             for (int i = 0; i < quiz.getQuestionList().get(position).getSelections().length; i++) {
                 Log.d(TAG, "selections length : " + quiz.getQuestionList().get(position).getSelections().length + "");
@@ -124,7 +135,23 @@ public class QuestionSlidePageFragment extends Fragment {
                     }
                     input = view.findViewById(R.id.et_question_input);
                     input.setVisibility(View.VISIBLE);
-                    break;
+                    final EditText finalInput = input;
+                    input.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            quizResults[position].setChoice(s.toString());
+                        }
+                    });
                 } else {
                     int num = i + 1;
                     selections[i].setText("(" + num + ")   " + sel);
@@ -141,17 +168,18 @@ public class QuestionSlidePageFragment extends Fragment {
 
                             // save my choice for quiz result at the end.
 
+                            quizResults[position].setChoice(sel);
+
+//                            QuizResult quizResult = new QuizResult(position, quiz.getQuestionList().get(position).getSelections()[finalI1], quiz.getQuestionList().get(position).getAnswer());
+//                            quizResults[position] = quizResult;
                         }
-
-
-
                     });
                 }
             }
 
             // Answer
-            TextView answer = view.findViewById(R.id.tv_question_answer);
-            answer.setText("답: " + quiz.getQuestionList().get(position).getAnswer() + "");
+//            TextView answer = view.findViewById(R.id.tv_question_answer);
+//            answer.setText("답: " + quiz.getQuestionList().get(position).getAnswer() + "");
 
 
             // Submit button at the end of the question
@@ -159,14 +187,25 @@ public class QuestionSlidePageFragment extends Fragment {
             if (position == (getCount() - 1)) {
                 submit.setVisibility(View.VISIBLE);
             }
-
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "quizResults.toString() : " + quizResults.toString());
+                    int sum = 0;
+                    for (int i = 0; i < quizResults.length; i++) {
+                        Log.d(TAG, "" + quizResults[i].getNumber() + " " + quizResults[i].getChoice());
+                        if (quizResults[i].getChoice().equals(quizResults[i].getAnswer())) {
+                            sum += 1;
+                        }
+                    }
+                    Toast.makeText(getContext(), "결과: " + sum + "/" +quizResults.length, Toast.LENGTH_SHORT).show();
+                }
+            });
             return view;
         }
 
-
         public void resetBackgroundColor(TextView[] selections) {
             for (int i = 0; i < selections.length; i++) {
-//                selections[i].setTextColor(Color.BLACK);
                 selections[i].setBackgroundColor(Color.parseColor("#EAEAEA"));
             }
         }
