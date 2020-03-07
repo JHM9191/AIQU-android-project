@@ -10,15 +10,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:text="파일을 등록하세요"
+        android:text="퀴즈셋을 만들어 보세요"
         android:textAlignment="center"
         android:textSize="36sp" />
 
-    <Button
-        android:id="@+id/bt_choose_file"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="createQuizset"
-        android:text="등록하기"
-        android:textSize="18sp" />
+        android:orientation="horizontal"
+        android:padding="30dp">
+
+        <Button
+            android:id="@+id/bt_choose_file"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:alpha="0.6"
+            android:background="@android:color/black"
+            android:onClick="createQuizsetByImages"
+            android:text="사진으로 만들기"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/bt_create_quizset_manually"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:alpha="0.6"
+            android:background="@android:color/black"
+            android:onClick="createQuizsetManually"
+            android:text="직접 만들기"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 </LinearLayout>

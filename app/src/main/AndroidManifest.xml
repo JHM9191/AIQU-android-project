@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".QuestionActivity"></activity>
         <activity
-            android:name=".CreateQuizset"
+            android:name=".CreateQuizsetActivity"
             android:label="@string/title_activity_home" />
         <activity android:name=".HomeActivity">
             <intent-filter>

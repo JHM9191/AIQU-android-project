@@ -1,42 +1,35 @@
 package com.example.aiqu;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.zip.Inflater;
-
-public class CreateQuizset extends AppCompatActivity {
+public class CreateQuizsetActivity extends AppCompatActivity {
     //    final static String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/TestLog/logfile.txt";
 //    final static String filePath = "/etc/public.libraries.txt";
 //    TextView textView;
 //    TextView detail;
+
+    static String TAG = "===";
 
     EditText et_filepath;
     EditText et_quizset_name;
     EditText et_subject;
 
     Intent fileIntent;
+
+
+    View layout_selections;
+    View layout_shortanswer;
+    Button bt_manual_add_question1, bt_manual_add_question2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +41,8 @@ public class CreateQuizset extends AppCompatActivity {
     }
 
 
-    public void createQuizset(View v) {
+    // 사진으로 퀴즈셋 만들기 버튼 클릭 이벤트
+    public void createQuizsetByImages(View v) {
         if (v.getId() == R.id.bt_choose_file) {
             fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
             fileIntent.setType("*/*");
@@ -151,6 +145,36 @@ public class CreateQuizset extends AppCompatActivity {
             editor.commit();
 
             startActivity(intent);
+        }
+    }
+
+    // 직접 퀴즈셋 만들기 버튼 클릭 이벤트
+    public void createQuizsetManually(View v) {
+        switch (v.getId()) {
+            case R.id.bt_create_quizset_manually:
+                setContentView(R.layout.layout_createquizeset_manually_fillup);
+                layout_selections = (LinearLayout) findViewById(R.id.layout_selections);
+                layout_shortanswer = (LinearLayout) findViewById(R.id.layout_shortanswer);
+                bt_manual_add_question1 = findViewById(R.id.bt_manual_add_question1);
+                bt_manual_add_question2 = findViewById(R.id.bt_manual_add_question2);
+                layout_selections.setVisibility(View.INVISIBLE);
+                layout_shortanswer.setVisibility(View.INVISIBLE);
+                bt_manual_add_question1.setVisibility(View.INVISIBLE);
+                bt_manual_add_question2.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.bt_manual_w_selections:
+                layout_selections.setVisibility(View.VISIBLE);
+                layout_shortanswer.setVisibility(View.INVISIBLE);
+                bt_manual_add_question1.setVisibility(View.VISIBLE);
+                bt_manual_add_question2.setVisibility(View.INVISIBLE);
+
+                break;
+            case R.id.bt_manual_shortanswer:
+                layout_shortanswer.setVisibility(View.VISIBLE);
+                layout_selections.setVisibility(View.INVISIBLE);
+                bt_manual_add_question2.setVisibility(View.VISIBLE);
+                bt_manual_add_question1.setVisibility(View.INVISIBLE);
+                break;
         }
     }
 

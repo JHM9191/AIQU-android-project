@@ -1,11 +1,9 @@
 package com.example.aiqu;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -58,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_btn1:
 //                createQuizset(new View(this));
-                intent = new Intent(this, CreateQuizset.class);
+                intent = new Intent(this, CreateQuizsetActivity.class);
                 startActivity(intent);
                 return true;
             default:
@@ -67,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 //    public void createQuizset(View view) {
-//        Intent intent = new Intent(getApplicationContext(), CreateQuizset.class);
+//        Intent intent = new Intent(getApplicationContext(), CreateQuizsetActivity.class);
 //        startActivity(intent);
 //    }
 }
