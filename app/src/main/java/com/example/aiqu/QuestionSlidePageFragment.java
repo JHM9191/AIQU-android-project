@@ -2,16 +2,13 @@ package com.example.aiqu;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,8 +21,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.aiqu.common.view.SlidingTabLayout;
-
-import java.util.ArrayList;
 
 public class QuestionSlidePageFragment extends Fragment {
 
@@ -50,11 +45,9 @@ public class QuestionSlidePageFragment extends Fragment {
         Log.d(TAG, "quizResults.length : " + quizResults.length);
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_question, container, false);
     }
 
@@ -131,11 +124,9 @@ public class QuestionSlidePageFragment extends Fragment {
                     for (int j = 0; j < selections.length; j++) {
                         selections[j].setVisibility(View.GONE);
                         selections[j].setVisibility(View.INVISIBLE);
-
                     }
                     input = view.findViewById(R.id.et_question_input);
                     input.setVisibility(View.VISIBLE);
-                    final EditText finalInput = input;
                     input.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -167,20 +158,27 @@ public class QuestionSlidePageFragment extends Fragment {
                             selections[finalI1].setBackgroundColor(Color.CYAN);
 
                             // save my choice for quiz result at the end.
-
                             quizResults[position].setChoice(sel);
+                        }
+                    });
 
-//                            QuizResult quizResult = new QuizResult(position, quiz.getQuestionList().get(position).getSelections()[finalI1], quiz.getQuestionList().get(position).getAnswer());
-//                            quizResults[position] = quizResult;
+                    selections[i].setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if (event.getAction() == (MotionEvent.ACTION_DOWN|MotionEvent.ACTION_HOVER_ENTER)){
+                                selections[finalI1].setBackgroundColor(Color.CYAN);
+
+                            }
+
+                            if (event.getAction() == MotionEvent.ACTION_UP) {
+//                                resetBackgroundColor(selections);
+                                selections[finalI1].setBackgroundColor(Color.CYAN);
+                            }
+                            return false;
                         }
                     });
                 }
             }
-
-            // Answer
-//            TextView answer = view.findViewById(R.id.tv_question_answer);
-//            answer.setText("답: " + quiz.getQuestionList().get(position).getAnswer() + "");
-
 
             // Submit button at the end of the question
             Button submit = view.findViewById(R.id.btn_question_submit);

@@ -1,4 +1,12 @@
 package com.example.aiqu;
 
-public class SwipeControllerActions {
+import android.widget.Toast;
+
+public abstract class SwipeControllerActions {
+
+    public void onLeftClicked(int position) {}
+
+    public void onRightClicked(int position) {
+    }
+
 }

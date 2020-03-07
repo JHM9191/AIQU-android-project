@@ -14,8 +14,8 @@
         android:layout_margin="2dp"
         android:background="@android:color/background_light"
         android:outlineSpotShadowColor="@android:color/background_dark"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="2dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="6dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="5dp">
 

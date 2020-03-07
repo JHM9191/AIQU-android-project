@@ -1,14 +1,15 @@
 package com.example.aiqu.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,13 +17,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aiqu.Question;
 import com.example.aiqu.QuestionActivity;
 import com.example.aiqu.Quiz;
 import com.example.aiqu.QuizsetItem;
 import com.example.aiqu.R;
+import com.example.aiqu.SwipeController;
+import com.example.aiqu.SwipeControllerActions;
 import com.example.aiqu.User;
+import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +46,7 @@ public class HomeFragment extends Fragment {
     QuizsetItemAdapter quizsetItemAdapter;
     LinearLayout container;
     ArrayList<Quiz> quizzes;
+    SwipeController swipeController;
 
     static int count;
 
@@ -54,11 +62,68 @@ public class HomeFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
-        ListView listView = root.findViewById(R.id.lv_quizset);
+
         getData();
-        quizsetItemAdapter = new QuizsetItemAdapter(inflater, quizzes);
-        listView.setAdapter(quizsetItemAdapter);
+        quizsetItemAdapter = new QuizsetItemAdapter(quizzes);
+
+        // Swipe 기능 추가하기
+        setupRecyclerView(root);
+
+
+//        SwipeableRecyclerViewTouchListener swipeTouchListener =
+//                new SwipeableRecyclerViewTouchListener(recyclerView, new SwipeableRecyclerViewTouchListener.SwipeListener() {
+//                    @Override
+//                    public boolean canSwipeLeft(int position) {
+//                        return true;
+//                    }
+//
+//                    @Override
+//                    public boolean canSwipeRight(int position) {
+//                        return true;
+//                    }
+//
+//                    @Override
+//                    public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] ints) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] ints) {
+//
+//                    }
+//                });
+//
+//        recyclerView.addOnItemTouchListener(swipeTouchListener);
+
         return root;
+    }
+
+    private void setupRecyclerView(View root) {
+
+        RecyclerView recyclerView = root.findViewById(R.id.rv_quizset);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(quizsetItemAdapter);
+
+        swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onRightClicked(int position) {
+                Toast.makeText(getContext(), quizsetItemAdapter.quizlist.get(position).getName() + " is removed", Toast.LENGTH_SHORT).show();
+                quizsetItemAdapter.quizlist.remove(position);
+                quizsetItemAdapter.notifyItemRemoved(position);
+                quizsetItemAdapter.notifyItemRangeRemoved(position, quizsetItemAdapter.getItemCount());
+
+            }
+        });
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
     }
 
 
@@ -679,55 +744,51 @@ public class HomeFragment extends Fragment {
 //        }
     }
 
-    class QuizsetItemAdapter extends BaseAdapter {
+    class QuizsetItemAdapter extends RecyclerView.Adapter<QuizsetItemAdapter.ViewHolder> {
 
         ArrayList<Quiz> quizlist;
 
-        LayoutInflater myInflater;
 
-        public QuizsetItemAdapter() {
+        // ViewHolder class that saves itemViews
+        // 아이템 뷰를 저장하는 뷰홀더 클래스
+        public class ViewHolder extends RecyclerView.ViewHolder {
 
+            TextView name, questions_count;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                // reference to view instances
+                // 뷰 객체에 대한 참조
+                name = itemView.findViewById(R.id.tv_item_quizset_name);
+                questions_count = itemView.findViewById(R.id.tv_item_questions_count);
+
+            }
         }
 
-        public QuizsetItemAdapter(LayoutInflater inflater, ArrayList<Quiz> quizlist) {
-            this.myInflater = inflater;
+        // hand-over data using constructor
+        // 생성자에서 데이터 리스트 객체를 전달받는다.
+        public QuizsetItemAdapter(ArrayList<Quiz> quizlist) {
             this.quizlist = quizlist;
         }
 
+        // return the viewHolder instance for itemView
+        // 아이템 뷰를 위한 뷰홀더 객체를 생성하여 리턴한다.
+        @NonNull
         @Override
-        public int getCount() {
-            return quizlist.size();
+        public QuizsetItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            Context context = parent.getContext();
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.item_quizset, parent, false);
+            QuizsetItemAdapter.ViewHolder viewHolder = new QuizsetItemAdapter.ViewHolder(view);
+            return viewHolder;
         }
 
         @Override
-        public Object getItem(int position) {
-            return quizlist.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            final ViewHolder holder;
-            if (convertView == null) {
-                convertView = myInflater.inflate(R.layout.item_quizset, null);
-                holder = new ViewHolder();
-                holder.name = (TextView) convertView.findViewById(R.id.tv_item_quizset_name);
-                holder.questions_count = (TextView) convertView.findViewById(R.id.tv_item_questions_count);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-
+        public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
             holder.name.setText(quizlist.get(position).getName() + "");
             holder.questions_count.setText(quizlist.get(position).getQuestionList().size() + " 문제");
-
-            convertView.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // Question Layout 으로 가는 Intent 를 시작 해줘야함.
@@ -741,14 +802,11 @@ public class HomeFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+        }
 
-            return convertView;
+        @Override
+        public int getItemCount() {
+            return quizlist.size();
         }
     }
-
-    static class ViewHolder {
-        TextView name, questions_count;
-    }
-
-
 }
