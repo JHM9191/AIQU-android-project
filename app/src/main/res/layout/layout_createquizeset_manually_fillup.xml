@@ -22,13 +22,18 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/et_manual_quizset_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="퀴즈셋 이름을 입력해주세요"
             android:inputType="textPersonName" />
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_questions_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +55,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bt_manual_w_selections"
+                android:id="@+id/bt_manual_question_type_w_selections"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -62,7 +67,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/bt_manual_shortanswer"
+                android:id="@+id/bt_manual_question_type_shortanswer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -86,7 +91,7 @@
             android:background="@drawable/border_shadow_grey"
             android:orientation="vertical"
             android:padding="10dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -106,7 +111,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/et_selections_question"
+                        android:id="@+id/et_manual_selections_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
@@ -137,35 +142,36 @@
                             android:orientation="vertical">
 
                             <RadioGroup
+                                android:id="@+id/rg_question_selections"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
                                 <RadioButton
-                                    android:id="@+id/radioButton"
+                                    android:id="@+id/rb_question_selection1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1" />
 
                                 <RadioButton
-                                    android:id="@+id/radioButton2"
+                                    android:id="@+id/rb_question_selection2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1" />
 
                                 <RadioButton
-                                    android:id="@+id/radioButton3"
+                                    android:id="@+id/rb_question_selection3"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1" />
 
                                 <RadioButton
-                                    android:id="@+id/radioButton4"
+                                    android:id="@+id/rb_question_selection4"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1" />
 
                                 <RadioButton
-                                    android:id="@+id/radioButton5"
+                                    android:id="@+id/rb_question_selection5"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1" />
@@ -178,7 +184,7 @@
                             android:orientation="vertical">
 
                             <EditText
-                                android:id="@+id/et_selection1"
+                                android:id="@+id/et_question_selection1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -188,7 +194,7 @@
                                 android:textAlignment="center" />
 
                             <EditText
-                                android:id="@+id/et_selection2"
+                                android:id="@+id/et_question_selection2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -198,7 +204,7 @@
                                 android:textAlignment="center" />
 
                             <EditText
-                                android:id="@+id/et_selection3"
+                                android:id="@+id/et_question_selection3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -208,7 +214,7 @@
                                 android:textAlignment="center" />
 
                             <EditText
-                                android:id="@+id/et_selection4"
+                                android:id="@+id/et_question_selection4"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -218,7 +224,7 @@
                                 android:textAlignment="center" />
 
                             <EditText
-                                android:id="@+id/et_selection5"
+                                android:id="@+id/et_question_selection5"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -233,19 +239,22 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:editable="false"
                         android:text="정답"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/et_selections_answer"
+                        android:id="@+id/et_manual_selections_answer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="25dp"
-                        android:editable="true"
                         android:ems="10"
+                        android:focusable="false"
+                        android:clickable="false"
                         android:hint="정답을 선택하세요"
-                        android:inputType="textPersonName"
+                        android:inputType="text"
                         android:textAlignment="center" />
 
                     <Button
@@ -271,7 +280,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -291,7 +300,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/et_shortanswer_question"
+                        android:id="@+id/et_manual_shortanswer_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
@@ -311,7 +320,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/et_shortanswer_answer"
+                        android:id="@+id/et_manual_shortanswer_answer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="25dp"

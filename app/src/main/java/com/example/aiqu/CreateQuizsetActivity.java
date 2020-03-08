@@ -8,9 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class CreateQuizsetActivity extends AppCompatActivity {
     //    final static String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/TestLog/logfile.txt";
@@ -27,9 +32,18 @@ public class CreateQuizsetActivity extends AppCompatActivity {
     Intent fileIntent;
 
 
+    // create quizset
     View layout_selections;
     View layout_shortanswer;
     Button bt_manual_add_question1, bt_manual_add_question2;
+    EditText et_manual_quizset_name;
+    EditText et_manual_selections_question, et_manual_selections_answer;
+    RadioGroup radioGroup;
+    RadioButton rb_question_selection1, rb_question_selection2, rb_question_selection3, rb_question_selection4, rb_question_selection5;
+    EditText et_question_selection1, et_question_selection2, et_question_selection3, et_question_selection4, et_question_selection5;
+    EditText et_manual_shortanswer_question, et_manual_shortanswer_answer;
+    ArrayList<Question> questions = new ArrayList<>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -162,18 +176,139 @@ public class CreateQuizsetActivity extends AppCompatActivity {
                 bt_manual_add_question1.setVisibility(View.INVISIBLE);
                 bt_manual_add_question2.setVisibility(View.INVISIBLE);
                 break;
-            case R.id.bt_manual_w_selections:
+            case R.id.bt_manual_question_type_w_selections:
                 layout_selections.setVisibility(View.VISIBLE);
                 layout_shortanswer.setVisibility(View.INVISIBLE);
                 bt_manual_add_question1.setVisibility(View.VISIBLE);
                 bt_manual_add_question2.setVisibility(View.INVISIBLE);
 
+                et_manual_selections_question = findViewById(R.id.et_manual_selections_question);
+
+                radioGroup = findViewById(R.id.rg_question_selections);
+
+                rb_question_selection1 = findViewById(R.id.rb_question_selection1);
+                rb_question_selection2 = findViewById(R.id.rb_question_selection2);
+                rb_question_selection3 = findViewById(R.id.rb_question_selection3);
+                rb_question_selection4 = findViewById(R.id.rb_question_selection4);
+                rb_question_selection5 = findViewById(R.id.rb_question_selection5);
+
+                et_question_selection1 = findViewById(R.id.et_question_selection1);
+                et_question_selection2 = findViewById(R.id.et_question_selection2);
+                et_question_selection3 = findViewById(R.id.et_question_selection3);
+                et_question_selection4 = findViewById(R.id.et_question_selection4);
+                et_question_selection5 = findViewById(R.id.et_question_selection5);
+
+
+                RadioGroup.OnCheckedChangeListener onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        EditText selection = null;
+                        RadioButton radioButtonChecked = null;
+                        et_manual_selections_answer.setText("");
+                        if (checkedId == R.id.rb_question_selection1) {
+                            radioButtonChecked = rb_question_selection1;
+                            selection = et_question_selection1;
+                        } else if (checkedId == R.id.rb_question_selection2) {
+                            radioButtonChecked = rb_question_selection2;
+                            selection = et_question_selection2;
+                        } else if (checkedId == R.id.rb_question_selection3) {
+                            radioButtonChecked = rb_question_selection3;
+                            selection = et_question_selection3;
+                        } else if (checkedId == R.id.rb_question_selection4) {
+                            radioButtonChecked = rb_question_selection4;
+                            selection = et_question_selection4;
+                        } else if (checkedId == R.id.rb_question_selection5) {
+                            radioButtonChecked = rb_question_selection5;
+                            selection = et_question_selection5;
+                        }
+                        if (selection.getText().toString() == null | selection.getText().toString().equals("")) {
+                            radioButtonChecked.setChecked(false);
+                            selection.requestFocus();
+                            Toast.makeText(CreateQuizsetActivity.this, "보기를 입력해주세요", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        et_manual_selections_answer.setText(selection.getText().toString());
+                    }
+                };
+                radioGroup.setOnCheckedChangeListener(onCheckedChangeListener);
+
+                et_manual_selections_answer = findViewById(R.id.et_manual_selections_answer);
+
+                bt_manual_add_question1.setOnClickListener(new View.OnClickListener() {
+                    int count = 0;
+
+                    public String[] getSelectionsArray() {
+                        String[] selections = null;
+
+                        String selection1 = et_question_selection1.getText().toString();
+                        String selection2 = et_question_selection2.getText().toString();
+                        String selection3 = et_question_selection3.getText().toString();
+                        String selection4 = et_question_selection4.getText().toString();
+                        String selection5 = et_question_selection5.getText().toString();
+
+                        if (selection5 == null | selection5.equals("")) {
+                            selections = new String[]{selection1, selection2, selection3, selection4};
+                        } else {
+                            selections = new String[]{selection1, selection2, selection3, selection4, selection5};
+                        }
+                        return selections;
+                    }
+
+                    @Override
+                    public void onClick(View v) {
+                        String question_type = "selections";
+                        String question_name = et_manual_selections_question.getText().toString();
+
+                        String[] selections = getSelectionsArray();
+                        String answer = et_manual_selections_answer.getText().toString();
+                        count++;
+                        Question question = new Question(count + "", question_name, question_type, selections, answer);
+                        questions.add(question);
+                        Log.d(TAG, "questions.toString() : " + questions.toString());
+                        et_manual_selections_question.setText("");
+                        et_question_selection1.setText("");
+                        et_question_selection2.setText("");
+                        et_question_selection3.setText("");
+                        et_question_selection4.setText("");
+                        et_question_selection5.setText("");
+                        rb_question_selection1.setChecked(false);
+                        rb_question_selection2.setChecked(false);
+                        rb_question_selection3.setChecked(false);
+                        rb_question_selection4.setChecked(false);
+                        rb_question_selection5.setChecked(false);
+                        et_manual_selections_answer.setText("");
+                    }
+                });
                 break;
-            case R.id.bt_manual_shortanswer:
+            case R.id.bt_manual_question_type_shortanswer:
                 layout_shortanswer.setVisibility(View.VISIBLE);
                 layout_selections.setVisibility(View.INVISIBLE);
                 bt_manual_add_question2.setVisibility(View.VISIBLE);
                 bt_manual_add_question1.setVisibility(View.INVISIBLE);
+
+                et_manual_quizset_name = findViewById(R.id.et_quizset_name);
+                et_manual_shortanswer_question = findViewById(R.id.et_manual_shortanswer_question);
+                et_manual_shortanswer_answer = findViewById(R.id.et_manual_shortanswer_answer);
+
+                bt_manual_add_question2.setOnClickListener(new View.OnClickListener() {
+                    int count = 0;
+
+                    @Override
+                    public void onClick(View v) {
+                        String question_type = "shortanswer";
+                        String question_name = et_manual_shortanswer_question.getText().toString();
+                        String answer = et_manual_shortanswer_answer.getText().toString();
+                        count++;
+                        Question question = new Question(count + "", question_name, question_type, null, answer);
+
+
+                        questions.add(question);
+                        Log.d(TAG, "questions.toString() : " + questions.toString());
+                        et_manual_shortanswer_question.setText("");
+                        et_manual_shortanswer_answer.setText("");
+                    }
+                });
+
                 break;
         }
     }
