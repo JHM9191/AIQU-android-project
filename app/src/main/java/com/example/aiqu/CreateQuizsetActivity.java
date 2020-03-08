@@ -1,19 +1,26 @@
 package com.example.aiqu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -33,6 +40,7 @@ public class CreateQuizsetActivity extends AppCompatActivity {
 
 
     // create quizset
+    int count = 0;
     View layout_selections;
     View layout_shortanswer;
     Button bt_manual_add_question1, bt_manual_add_question2;
@@ -45,6 +53,8 @@ public class CreateQuizsetActivity extends AppCompatActivity {
     ArrayList<Question> questions = new ArrayList<>();
 
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +62,8 @@ public class CreateQuizsetActivity extends AppCompatActivity {
         // ActionBar 숨기기
         getSupportActionBar().hide();
 //        Log.i("-----", filePath);
+
+
     }
 
 
@@ -235,8 +247,6 @@ public class CreateQuizsetActivity extends AppCompatActivity {
                 et_manual_selections_answer = findViewById(R.id.et_manual_selections_answer);
 
                 bt_manual_add_question1.setOnClickListener(new View.OnClickListener() {
-                    int count = 0;
-
                     public String[] getSelectionsArray() {
                         String[] selections = null;
 
@@ -291,8 +301,6 @@ public class CreateQuizsetActivity extends AppCompatActivity {
                 et_manual_shortanswer_answer = findViewById(R.id.et_manual_shortanswer_answer);
 
                 bt_manual_add_question2.setOnClickListener(new View.OnClickListener() {
-                    int count = 0;
-
                     @Override
                     public void onClick(View v) {
                         String question_type = "shortanswer";
@@ -300,15 +308,12 @@ public class CreateQuizsetActivity extends AppCompatActivity {
                         String answer = et_manual_shortanswer_answer.getText().toString();
                         count++;
                         Question question = new Question(count + "", question_name, question_type, null, answer);
-
-
                         questions.add(question);
                         Log.d(TAG, "questions.toString() : " + questions.toString());
                         et_manual_shortanswer_question.setText("");
                         et_manual_shortanswer_answer.setText("");
                     }
                 });
-
                 break;
         }
     }
@@ -327,6 +332,8 @@ public class CreateQuizsetActivity extends AppCompatActivity {
             }
         }
     }
+
+
     //    public void createQuizset(View view) {
 //        String read = ReadTextFile(filePath);
 //        setContentView(R.layout.activity_registerquizset);

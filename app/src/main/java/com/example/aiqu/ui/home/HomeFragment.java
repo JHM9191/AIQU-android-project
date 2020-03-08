@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aiqu.CreateQuizsetActivity;
+import com.example.aiqu.EditQuizsetActivity;
 import com.example.aiqu.Question;
 import com.example.aiqu.QuestionActivity;
 import com.example.aiqu.Quiz;
@@ -112,6 +114,17 @@ public class HomeFragment extends Fragment {
                 quizsetItemAdapter.quizlist.remove(position);
                 quizsetItemAdapter.notifyItemRemoved(position);
                 quizsetItemAdapter.notifyItemRangeRemoved(position, quizsetItemAdapter.getItemCount());
+
+            }
+
+            @Override
+            public void onLeftClicked(int position) {
+                Toast.makeText(getContext(), quizsetItemAdapter.quizlist.get(position).getName() + " in edit mode", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), EditQuizsetActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("quiz", quizsetItemAdapter.quizlist.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
         });
